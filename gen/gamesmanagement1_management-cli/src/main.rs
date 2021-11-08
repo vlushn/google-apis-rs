@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_gamesmanagement1_management::{api, Error};
+use google_gamesmanagement1_management::{api, Error, oauth2};
 
 mod client;
 
@@ -1112,9 +1111,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/gamesmanagement1-management", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -1465,7 +1464,7 @@ async fn main() {
     
     let mut app = App::new("gamesmanagement1-management")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210325")
+           .version("2.0.9+20210325")
            .about("The Google Play Game Management API allows developers to manage resources from the Google Play Game service.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_gamesmanagement1_management_cli")
            .arg(Arg::with_name("url")

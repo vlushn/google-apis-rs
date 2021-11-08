@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_cloudtrace1::{api, Error};
+use google_cloudtrace1::{api, Error, oauth2};
 
 mod client;
 
@@ -304,9 +303,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/cloudtrace1", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -429,7 +428,7 @@ async fn main() {
     
     let mut app = App::new("cloudtrace1")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210319")
+           .version("2.0.9+20210319")
            .about("Sends application trace data to Cloud Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API. This library is used to interact with the Cloud Trace API directly. If you are looking to instrument your application for Cloud Trace, we recommend using OpenCensus. ")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_cloudtrace1_cli")
            .arg(Arg::with_name("url")

@@ -52,13 +52,11 @@ impl Default for Scope {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::{Result, Error};
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use networkconnectivity1_alpha1::Networkconnectivity;
+/// use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 /// // `client_secret`, among other things.
@@ -68,9 +66,9 @@ impl Default for Scope {
 /// // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 /// // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 /// // retrieve them from storage.
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -101,8 +99,8 @@ impl Default for Scope {
 /// ```
 #[derive(Clone)]
 pub struct Networkconnectivity<> {
-    client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
-    auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
+    pub client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
+    pub auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
     _user_agent: String,
     _base_url: String,
     _root_url: String,
@@ -116,7 +114,7 @@ impl<'a, > Networkconnectivity<> {
         Networkconnectivity {
             client,
             auth: authenticator,
-            _user_agent: "google-api-rust-client/2.0.8".to_string(),
+            _user_agent: "google-api-rust-client/2.0.9".to_string(),
             _base_url: "https://networkconnectivity.googleapis.com/".to_string(),
             _root_url: "https://networkconnectivity.googleapis.com/".to_string(),
         }
@@ -127,7 +125,7 @@ impl<'a, > Networkconnectivity<> {
     }
 
     /// Set the user-agent header field to use in all requests to the server.
-    /// It defaults to `google-api-rust-client/2.0.8`.
+    /// It defaults to `google-api-rust-client/2.0.9`.
     ///
     /// Returns the previously set user-agent.
     pub fn user_agent(&mut self, agent_name: String) -> String {
@@ -638,18 +636,16 @@ impl client::ResponseResult for TestIamPermissionsResponse {}
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use networkconnectivity1_alpha1::Networkconnectivity;
+/// use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1219,18 +1215,16 @@ impl<'a> ProjectMethods<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::Hub;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -1531,17 +1525,15 @@ impl<'a> ProjectLocationGlobalHubCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -1801,17 +1793,15 @@ impl<'a> ProjectLocationGlobalHubDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -2059,17 +2049,15 @@ impl<'a> ProjectLocationGlobalHubGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -2329,17 +2317,15 @@ impl<'a> ProjectLocationGlobalHubGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -2635,18 +2621,16 @@ impl<'a> ProjectLocationGlobalHubListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::Hub;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2947,18 +2931,16 @@ impl<'a> ProjectLocationGlobalHubPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3235,18 +3217,16 @@ impl<'a> ProjectLocationGlobalHubSetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3523,17 +3503,15 @@ impl<'a> ProjectLocationGlobalHubTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3793,18 +3771,16 @@ impl<'a> ProjectLocationInternalRangeGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4081,18 +4057,16 @@ impl<'a> ProjectLocationInternalRangeSetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4369,18 +4343,16 @@ impl<'a> ProjectLocationInternalRangeTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::GoogleLongrunningCancelOperationRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4657,17 +4629,15 @@ impl<'a> ProjectLocationOperationCancelCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4915,17 +4885,15 @@ impl<'a> ProjectLocationOperationDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5173,17 +5141,15 @@ impl<'a> ProjectLocationOperationGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5467,17 +5433,15 @@ impl<'a> ProjectLocationOperationListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5737,18 +5701,16 @@ impl<'a> ProjectLocationPolicyBasedRouteGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6025,18 +5987,16 @@ impl<'a> ProjectLocationPolicyBasedRouteSetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6313,18 +6273,16 @@ impl<'a> ProjectLocationPolicyBasedRouteTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::Spoke;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6625,17 +6583,15 @@ impl<'a> ProjectLocationSpokeCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6895,17 +6851,15 @@ impl<'a> ProjectLocationSpokeDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7153,17 +7107,15 @@ impl<'a> ProjectLocationSpokeGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7423,17 +7375,15 @@ impl<'a> ProjectLocationSpokeGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7729,18 +7679,16 @@ impl<'a> ProjectLocationSpokeListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::Spoke;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8041,18 +7989,16 @@ impl<'a> ProjectLocationSpokePatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8329,18 +8275,16 @@ impl<'a> ProjectLocationSpokeSetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// use networkconnectivity1_alpha1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8617,17 +8561,15 @@ impl<'a> ProjectLocationSpokeTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8875,17 +8817,15 @@ impl<'a> ProjectLocationGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_networkconnectivity1_alpha1 as networkconnectivity1_alpha1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use networkconnectivity1_alpha1::Networkconnectivity;
+/// # use networkconnectivity1_alpha1::{Networkconnectivity, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = Networkconnectivity::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and

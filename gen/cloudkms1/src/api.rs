@@ -56,14 +56,12 @@ impl Default for Scope {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::CryptoKeyVersion;
 /// use cloudkms1::{Result, Error};
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use cloudkms1::CloudKMS;
+/// use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 /// // `client_secret`, among other things.
@@ -73,9 +71,9 @@ impl Default for Scope {
 /// // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 /// // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 /// // retrieve them from storage.
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -111,8 +109,8 @@ impl Default for Scope {
 /// ```
 #[derive(Clone)]
 pub struct CloudKMS<> {
-    client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
-    auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
+    pub client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
+    pub auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
     _user_agent: String,
     _base_url: String,
     _root_url: String,
@@ -126,7 +124,7 @@ impl<'a, > CloudKMS<> {
         CloudKMS {
             client,
             auth: authenticator,
-            _user_agent: "google-api-rust-client/2.0.8".to_string(),
+            _user_agent: "google-api-rust-client/2.0.9".to_string(),
             _base_url: "https://cloudkms.googleapis.com/".to_string(),
             _root_url: "https://cloudkms.googleapis.com/".to_string(),
         }
@@ -137,7 +135,7 @@ impl<'a, > CloudKMS<> {
     }
 
     /// Set the user-agent header field to use in all requests to the server.
-    /// It defaults to `google-api-rust-client/2.0.8`.
+    /// It defaults to `google-api-rust-client/2.0.9`.
     ///
     /// Returns the previously set user-agent.
     pub fn user_agent(&mut self, agent_name: String) -> String {
@@ -1066,18 +1064,16 @@ impl client::Part for WrappingPublicKey {}
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_cloudkms1 as cloudkms1;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use cloudkms1::CloudKMS;
+/// use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1765,18 +1761,16 @@ impl<'a> ProjectMethods<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::AsymmetricDecryptRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2053,18 +2047,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionAsymmetricDecryptCall<'a
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::AsymmetricSignRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2341,18 +2333,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionAsymmetricSignCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::CryptoKeyVersion;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2629,18 +2619,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::DestroyCryptoKeyVersionRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2917,17 +2905,15 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionDestroyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3175,17 +3161,15 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3433,18 +3417,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionGetPublicKeyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::ImportCryptoKeyVersionRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3721,17 +3703,15 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionImportCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4039,18 +4019,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::CryptoKeyVersion;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4339,18 +4317,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::RestoreCryptoKeyVersionRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4627,18 +4603,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCryptoKeyVersionRestoreCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::CryptoKey;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4939,18 +4913,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::DecryptRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5227,18 +5199,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyDecryptCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::EncryptRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5515,17 +5485,15 @@ impl<'a> ProjectLocationKeyRingCryptoKeyEncryptCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5773,17 +5741,15 @@ impl<'a> ProjectLocationKeyRingCryptoKeyGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6043,17 +6009,15 @@ impl<'a> ProjectLocationKeyRingCryptoKeyGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6361,18 +6325,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::CryptoKey;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6661,18 +6623,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6949,18 +6909,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeySetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7237,18 +7195,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::UpdateCryptoKeyPrimaryVersionRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7525,18 +7481,16 @@ impl<'a> ProjectLocationKeyRingCryptoKeyUpdatePrimaryVersionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::ImportJob;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7825,17 +7779,15 @@ impl<'a> ProjectLocationKeyRingImportJobCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8083,17 +8035,15 @@ impl<'a> ProjectLocationKeyRingImportJobGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8353,17 +8303,15 @@ impl<'a> ProjectLocationKeyRingImportJobGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8659,18 +8607,16 @@ impl<'a> ProjectLocationKeyRingImportJobListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8947,18 +8893,16 @@ impl<'a> ProjectLocationKeyRingImportJobSetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9235,18 +9179,16 @@ impl<'a> ProjectLocationKeyRingImportJobTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::KeyRing;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9535,17 +9477,15 @@ impl<'a> ProjectLocationKeyRingCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9793,17 +9733,15 @@ impl<'a> ProjectLocationKeyRingGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10063,17 +10001,15 @@ impl<'a> ProjectLocationKeyRingGetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10369,18 +10305,16 @@ impl<'a> ProjectLocationKeyRingListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::SetIamPolicyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10657,18 +10591,16 @@ impl<'a> ProjectLocationKeyRingSetIamPolicyCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// use cloudkms1::api::TestIamPermissionsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10945,17 +10877,15 @@ impl<'a> ProjectLocationKeyRingTestIamPermissionCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11203,17 +11133,15 @@ impl<'a> ProjectLocationGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_cloudkms1 as cloudkms1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use cloudkms1::CloudKMS;
+/// # use cloudkms1::{CloudKMS, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CloudKMS::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and

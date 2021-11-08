@@ -68,14 +68,12 @@ impl Default for Scope {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Channel;
 /// use calendar3::{Result, Error};
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 /// // `client_secret`, among other things.
@@ -85,9 +83,9 @@ impl Default for Scope {
 /// // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 /// // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 /// // retrieve them from storage.
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -139,8 +137,8 @@ impl Default for Scope {
 /// ```
 #[derive(Clone)]
 pub struct CalendarHub<> {
-    client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
-    auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
+    pub client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
+    pub auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
     _user_agent: String,
     _base_url: String,
     _root_url: String,
@@ -154,7 +152,7 @@ impl<'a, > CalendarHub<> {
         CalendarHub {
             client,
             auth: authenticator,
-            _user_agent: "google-api-rust-client/2.0.8".to_string(),
+            _user_agent: "google-api-rust-client/2.0.9".to_string(),
             _base_url: "https://www.googleapis.com/calendar/v3/".to_string(),
             _root_url: "https://www.googleapis.com/".to_string(),
         }
@@ -186,7 +184,7 @@ impl<'a, > CalendarHub<> {
     }
 
     /// Set the user-agent header field to use in all requests to the server.
-    /// It defaults to `google-api-rust-client/2.0.8`.
+    /// It defaults to `google-api-rust-client/2.0.9`.
     ///
     /// Returns the previously set user-agent.
     pub fn user_agent(&mut self, agent_name: String) -> String {
@@ -1421,18 +1419,16 @@ impl client::Part for EventSource {}
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1610,18 +1606,16 @@ impl<'a> AclMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1786,18 +1780,16 @@ impl<'a> CalendarListMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1935,18 +1927,16 @@ impl<'a> CalendarMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1995,18 +1985,16 @@ impl<'a> ChannelMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -2050,18 +2038,16 @@ impl<'a> ColorMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -2377,18 +2363,16 @@ impl<'a> EventMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -2437,18 +2421,16 @@ impl<'a> FreebusyMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_calendar3 as calendar3;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use calendar3::CalendarHub;
+/// use calendar3::{CalendarHub, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -2540,17 +2522,15 @@ impl<'a> SettingMethods<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -2791,17 +2771,15 @@ impl<'a> AclDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3053,18 +3031,16 @@ impl<'a> AclGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::AclRule;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3345,17 +3321,15 @@ impl<'a> AclInsertCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3646,18 +3620,16 @@ impl<'a> AclListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::AclRule;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3950,18 +3922,16 @@ impl<'a> AclPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::AclRule;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4254,18 +4224,16 @@ impl<'a> AclUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Channel;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4585,17 +4553,15 @@ impl<'a> AclWatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4824,17 +4790,15 @@ impl<'a> CalendarListDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5074,18 +5038,16 @@ impl<'a> CalendarListGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::CalendarListEntry;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5333,17 +5295,15 @@ impl<'a> CalendarListInsertCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5626,18 +5586,16 @@ impl<'a> CalendarListListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::CalendarListEntry;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5918,18 +5876,16 @@ impl<'a> CalendarListPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::CalendarListEntry;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6210,18 +6166,16 @@ impl<'a> CalendarListUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Channel;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6533,17 +6487,15 @@ impl<'a> CalendarListWatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6772,17 +6724,15 @@ impl<'a> CalendarClearCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7011,17 +6961,15 @@ impl<'a> CalendarDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7261,18 +7209,16 @@ impl<'a> CalendarGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Calendar;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7508,18 +7454,16 @@ impl<'a> CalendarInsertCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Calendar;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7788,18 +7732,16 @@ impl<'a> CalendarPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Calendar;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8068,18 +8010,16 @@ impl<'a> CalendarUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Channel;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8304,17 +8244,15 @@ impl<'a> ChannelStopCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8521,17 +8459,15 @@ impl<'a> ColorGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8798,17 +8734,15 @@ impl<'a> EventDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9096,18 +9030,16 @@ impl<'a> EventGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Event;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9400,18 +9332,16 @@ impl<'a> EventImportCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Event;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9742,17 +9672,15 @@ impl<'a> EventInsertCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10112,17 +10040,15 @@ impl<'a> EventInstanceCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10585,17 +10511,15 @@ impl<'a> EventListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10885,18 +10809,16 @@ impl<'a> EventMoveCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Event;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11251,17 +11173,15 @@ impl<'a> EventPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11539,18 +11459,16 @@ impl<'a> EventQuickAddCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Event;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11905,18 +11823,16 @@ impl<'a> EventUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Channel;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12408,18 +12324,16 @@ impl<'a> EventWatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::FreeBusyRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12655,17 +12569,15 @@ impl<'a> FreebusyQueryCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -12905,17 +12817,15 @@ impl<'a> SettingGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13161,18 +13071,16 @@ impl<'a> SettingListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_calendar3 as calendar3;
 /// use calendar3::api::Channel;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use calendar3::CalendarHub;
+/// # use calendar3::{CalendarHub, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = CalendarHub::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information

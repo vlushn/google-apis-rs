@@ -76,14 +76,12 @@ impl Default for Scope {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Folder;
 /// use tagmanager1::{Result, Error};
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use tagmanager1::TagManager;
+/// use tagmanager1::{TagManager, oauth2};
 /// 
 /// // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 /// // `client_secret`, among other things.
@@ -93,9 +91,9 @@ impl Default for Scope {
 /// // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 /// // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 /// // retrieve them from storage.
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -133,8 +131,8 @@ impl Default for Scope {
 /// ```
 #[derive(Clone)]
 pub struct TagManager<> {
-    client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
-    auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
+    pub client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
+    pub auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
     _user_agent: String,
     _base_url: String,
     _root_url: String,
@@ -148,7 +146,7 @@ impl<'a, > TagManager<> {
         TagManager {
             client,
             auth: authenticator,
-            _user_agent: "google-api-rust-client/2.0.8".to_string(),
+            _user_agent: "google-api-rust-client/2.0.9".to_string(),
             _base_url: "https://tagmanager.googleapis.com/".to_string(),
             _root_url: "https://tagmanager.googleapis.com/".to_string(),
         }
@@ -159,7 +157,7 @@ impl<'a, > TagManager<> {
     }
 
     /// Set the user-agent header field to use in all requests to the server.
-    /// It defaults to `google-api-rust-client/2.0.8`.
+    /// It defaults to `google-api-rust-client/2.0.9`.
     ///
     /// Returns the previously set user-agent.
     pub fn user_agent(&mut self, agent_name: String) -> String {
@@ -1194,18 +1192,16 @@ impl client::ResponseResult for Variable {}
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_tagmanager1 as tagmanager1;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use tagmanager1::TagManager;
+/// use tagmanager1::{TagManager, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -2257,18 +2253,16 @@ impl<'a> AccountMethods<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Environment;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2553,17 +2547,15 @@ impl<'a> AccountContainerEnvironmentCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -2820,17 +2812,15 @@ impl<'a> AccountContainerEnvironmentDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3098,17 +3088,15 @@ impl<'a> AccountContainerEnvironmentGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3364,18 +3352,16 @@ impl<'a> AccountContainerEnvironmentListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Environment;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3684,17 +3670,15 @@ impl<'a> AccountContainerEnvironmentUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3962,18 +3946,16 @@ impl<'a> AccountContainerFolderEntityListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Folder;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4258,17 +4240,15 @@ impl<'a> AccountContainerFolderCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4525,17 +4505,15 @@ impl<'a> AccountContainerFolderDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4803,17 +4781,15 @@ impl<'a> AccountContainerFolderGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5069,18 +5045,16 @@ impl<'a> AccountContainerFolderListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Folder;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5389,18 +5363,16 @@ impl<'a> AccountContainerFolderUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Folder;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5731,18 +5703,16 @@ impl<'a> AccountContainerMoveFolderUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Environment;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6039,18 +6009,16 @@ impl<'a> AccountContainerReauthorizeEnvironmentUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Tag;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6335,17 +6303,15 @@ impl<'a> AccountContainerTagCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6602,17 +6568,15 @@ impl<'a> AccountContainerTagDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6880,17 +6844,15 @@ impl<'a> AccountContainerTagGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7146,18 +7108,16 @@ impl<'a> AccountContainerTagListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Tag;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7466,18 +7426,16 @@ impl<'a> AccountContainerTagUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Trigger;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7762,17 +7720,15 @@ impl<'a> AccountContainerTriggerCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8029,17 +7985,15 @@ impl<'a> AccountContainerTriggerDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8307,17 +8261,15 @@ impl<'a> AccountContainerTriggerGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8573,18 +8525,16 @@ impl<'a> AccountContainerTriggerListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Trigger;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8893,18 +8843,16 @@ impl<'a> AccountContainerTriggerUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Variable;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9189,17 +9137,15 @@ impl<'a> AccountContainerVariableCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9456,17 +9402,15 @@ impl<'a> AccountContainerVariableDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9734,17 +9678,15 @@ impl<'a> AccountContainerVariableGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10000,18 +9942,16 @@ impl<'a> AccountContainerVariableListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Variable;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10320,18 +10260,16 @@ impl<'a> AccountContainerVariableUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::CreateContainerVersionRequestVersionOptions;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10616,17 +10554,15 @@ impl<'a> AccountContainerVersionCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10883,17 +10819,15 @@ impl<'a> AccountContainerVersionDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11161,17 +11095,15 @@ impl<'a> AccountContainerVersionGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11451,17 +11383,15 @@ impl<'a> AccountContainerVersionListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11741,17 +11671,15 @@ impl<'a> AccountContainerVersionPublishCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -12019,17 +11947,15 @@ impl<'a> AccountContainerVersionRestoreCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -12297,18 +12223,16 @@ impl<'a> AccountContainerVersionUndeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::ContainerVersion;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12617,18 +12541,16 @@ impl<'a> AccountContainerVersionUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Container;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12901,17 +12823,15 @@ impl<'a> AccountContainerCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13156,17 +13076,15 @@ impl<'a> AccountContainerDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13422,17 +13340,15 @@ impl<'a> AccountContainerGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13676,18 +13592,16 @@ impl<'a> AccountContainerListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Container;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -13984,18 +13898,16 @@ impl<'a> AccountContainerUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::UserAccess;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -14268,17 +14180,15 @@ impl<'a> AccountPermissionCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14523,17 +14433,15 @@ impl<'a> AccountPermissionDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14789,17 +14697,15 @@ impl<'a> AccountPermissionGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15043,18 +14949,16 @@ impl<'a> AccountPermissionListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::UserAccess;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -15339,17 +15243,15 @@ impl<'a> AccountPermissionUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15593,17 +15495,15 @@ impl<'a> AccountGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15814,18 +15714,16 @@ impl<'a> AccountListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_tagmanager1 as tagmanager1;
 /// use tagmanager1::api::Account;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use tagmanager1::TagManager;
+/// # use tagmanager1::{TagManager, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = TagManager::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information

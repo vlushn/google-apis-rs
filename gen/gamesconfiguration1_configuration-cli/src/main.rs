@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_gamesconfiguration1_configuration::{api, Error};
+use google_gamesconfiguration1_configuration::{api, Error, oauth2};
 
 mod client;
 
@@ -935,9 +934,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/gamesconfiguration1-configuration", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -1255,7 +1254,7 @@ async fn main() {
     
     let mut app = App::new("gamesconfiguration1-configuration")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210325")
+           .version("2.0.9+20210325")
            .about("The Google Play Game Services Publishing API allows developers to configure their games in Game Services.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_gamesconfiguration1_configuration_cli")
            .arg(Arg::with_name("url")

@@ -64,14 +64,12 @@ impl Default for Scope {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest;
 /// use analyticsadmin1_alpha::{Result, Error};
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 /// // `client_secret`, among other things.
@@ -81,9 +79,9 @@ impl Default for Scope {
 /// // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 /// // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 /// // retrieve them from storage.
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -118,8 +116,8 @@ impl Default for Scope {
 /// ```
 #[derive(Clone)]
 pub struct GoogleAnalyticsAdmin<> {
-    client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
-    auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
+    pub client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
+    pub auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
     _user_agent: String,
     _base_url: String,
     _root_url: String,
@@ -133,7 +131,7 @@ impl<'a, > GoogleAnalyticsAdmin<> {
         GoogleAnalyticsAdmin {
             client,
             auth: authenticator,
-            _user_agent: "google-api-rust-client/2.0.8".to_string(),
+            _user_agent: "google-api-rust-client/2.0.9".to_string(),
             _base_url: "https://analyticsadmin.googleapis.com/".to_string(),
             _root_url: "https://analyticsadmin.googleapis.com/".to_string(),
         }
@@ -150,7 +148,7 @@ impl<'a, > GoogleAnalyticsAdmin<> {
     }
 
     /// Set the user-agent header field to use in all requests to the server.
-    /// It defaults to `google-api-rust-client/2.0.8`.
+    /// It defaults to `google-api-rust-client/2.0.9`.
     ///
     /// Returns the previously set user-agent.
     pub fn user_agent(&mut self, agent_name: String) -> String {
@@ -1254,18 +1252,16 @@ impl client::ResponseResult for GoogleProtobufEmpty {}
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1311,18 +1307,16 @@ impl<'a> AccountSummaryMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -1662,18 +1656,16 @@ impl<'a> AccountMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -2466,17 +2458,15 @@ impl<'a> PropertyMethods<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -2711,18 +2701,16 @@ impl<'a> AccountSummaryListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaAuditUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -2999,18 +2987,16 @@ impl<'a> AccountUserLinkAuditCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3287,18 +3273,16 @@ impl<'a> AccountUserLinkBatchCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -3575,17 +3559,15 @@ impl<'a> AccountUserLinkBatchDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -3848,18 +3830,16 @@ impl<'a> AccountUserLinkBatchGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4136,18 +4116,16 @@ impl<'a> AccountUserLinkBatchUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaUserLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4436,17 +4414,15 @@ impl<'a> AccountUserLinkCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4694,17 +4670,15 @@ impl<'a> AccountUserLinkDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4952,17 +4926,15 @@ impl<'a> AccountUserLinkGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5234,18 +5206,16 @@ impl<'a> AccountUserLinkListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaUserLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5522,17 +5492,15 @@ impl<'a> AccountUserLinkPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5780,17 +5748,15 @@ impl<'a> AccountDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6038,17 +6004,15 @@ impl<'a> AccountGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6296,17 +6260,15 @@ impl<'a> AccountGetDataSharingSettingCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6553,18 +6515,16 @@ impl<'a> AccountListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaAccount;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6853,18 +6813,16 @@ impl<'a> AccountPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaProvisionAccountTicketRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7104,18 +7062,16 @@ impl<'a> AccountProvisionAccountTicketCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7392,18 +7348,16 @@ impl<'a> AccountSearchChangeHistoryEventCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaAndroidAppDataStream;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7680,17 +7634,15 @@ impl<'a> PropertyAndroidAppDataStreamCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7938,17 +7890,15 @@ impl<'a> PropertyAndroidAppDataStreamDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8196,17 +8146,15 @@ impl<'a> PropertyAndroidAppDataStreamGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8478,18 +8426,16 @@ impl<'a> PropertyAndroidAppDataStreamListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaAndroidAppDataStream;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8778,18 +8724,16 @@ impl<'a> PropertyAndroidAppDataStreamPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaFirebaseLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9066,17 +9010,15 @@ impl<'a> PropertyFirebaseLinkCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9324,17 +9266,15 @@ impl<'a> PropertyFirebaseLinkDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9606,18 +9546,16 @@ impl<'a> PropertyFirebaseLinkListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaFirebaseLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9906,18 +9844,16 @@ impl<'a> PropertyFirebaseLinkPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaGoogleAdsLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10194,17 +10130,15 @@ impl<'a> PropertyGoogleAdsLinkCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10452,17 +10386,15 @@ impl<'a> PropertyGoogleAdsLinkDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10734,18 +10666,16 @@ impl<'a> PropertyGoogleAdsLinkListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaGoogleAdsLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11034,18 +10964,16 @@ impl<'a> PropertyGoogleAdsLinkPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaIosAppDataStream;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11322,17 +11250,15 @@ impl<'a> PropertyIosAppDataStreamCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11580,17 +11506,15 @@ impl<'a> PropertyIosAppDataStreamDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -11838,17 +11762,15 @@ impl<'a> PropertyIosAppDataStreamGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -12120,18 +12042,16 @@ impl<'a> PropertyIosAppDataStreamListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaIosAppDataStream;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12420,18 +12340,16 @@ impl<'a> PropertyIosAppDataStreamPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaAuditUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12708,18 +12626,16 @@ impl<'a> PropertyUserLinkAuditCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12996,18 +12912,16 @@ impl<'a> PropertyUserLinkBatchCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -13284,17 +13198,15 @@ impl<'a> PropertyUserLinkBatchDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13557,18 +13469,16 @@ impl<'a> PropertyUserLinkBatchGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -13845,18 +13755,16 @@ impl<'a> PropertyUserLinkBatchUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaUserLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -14145,17 +14053,15 @@ impl<'a> PropertyUserLinkCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14403,17 +14309,15 @@ impl<'a> PropertyUserLinkDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14661,17 +14565,15 @@ impl<'a> PropertyUserLinkGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14943,18 +14845,16 @@ impl<'a> PropertyUserLinkListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaUserLink;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -15231,18 +15131,16 @@ impl<'a> PropertyUserLinkPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaWebDataStream;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -15519,17 +15417,15 @@ impl<'a> PropertyWebDataStreamCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15777,17 +15673,15 @@ impl<'a> PropertyWebDataStreamDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16035,17 +15929,15 @@ impl<'a> PropertyWebDataStreamGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16293,17 +16185,15 @@ impl<'a> PropertyWebDataStreamGetEnhancedMeasurementSettingCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16551,17 +16441,15 @@ impl<'a> PropertyWebDataStreamGetGlobalSiteTagCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16833,18 +16721,16 @@ impl<'a> PropertyWebDataStreamListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaWebDataStream;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -17133,18 +17019,16 @@ impl<'a> PropertyWebDataStreamPatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -17433,18 +17317,16 @@ impl<'a> PropertyWebDataStreamUpdateEnhancedMeasurementSettingCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaProperty;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -17684,17 +17566,15 @@ impl<'a> PropertyCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -17942,17 +17822,15 @@ impl<'a> PropertyDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -18200,17 +18078,15 @@ impl<'a> PropertyGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -18469,18 +18345,16 @@ impl<'a> PropertyListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_analyticsadmin1_alpha as analyticsadmin1_alpha;
 /// use analyticsadmin1_alpha::api::GoogleAnalyticsAdminV1alphaProperty;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use analyticsadmin1_alpha::GoogleAnalyticsAdmin;
+/// # use analyticsadmin1_alpha::{GoogleAnalyticsAdmin, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = GoogleAnalyticsAdmin::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information

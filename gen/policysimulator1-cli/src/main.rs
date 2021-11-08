@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_policysimulator1::{api, Error};
+use google_policysimulator1::{api, Error, oauth2};
 
 mod client;
 
@@ -883,9 +882,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/policysimulator1", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -1193,7 +1192,7 @@ async fn main() {
     
     let mut app = App::new("policysimulator1")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210330")
+           .version("2.0.9+20210330")
            .about(" Policy Simulator is a collection of endpoints for creating, running, and viewing a Replay. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_policysimulator1_cli")
            .arg(Arg::with_name("url")

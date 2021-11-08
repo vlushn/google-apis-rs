@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_translate2::{api, Error};
+use google_translate2::{api, Error, oauth2};
 
 mod client;
 
@@ -466,9 +465,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/translate2", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -633,7 +632,7 @@ async fn main() {
     
     let mut app = App::new("translate2")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20170525")
+           .version("2.0.9+20170525")
            .about("The Google Cloud Translation API lets websites and programs integrate with
                Google Translate programmatically.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_translate2_cli")

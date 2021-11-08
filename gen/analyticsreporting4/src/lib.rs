@@ -2,7 +2,7 @@
 // This file was generated automatically from 'src/mako/api/lib.rs.mako'
 // DO NOT EDIT !
 
-//! This documentation was generated from *AnalyticsReporting* crate version *2.0.8+20210310*, where *20210310* is the exact revision of the *analyticsreporting:v4* schema built by the [mako](http://www.makotemplates.org/) code generator *v2.0.8*.
+//! This documentation was generated from *AnalyticsReporting* crate version *2.0.9+20210310*, where *20210310* is the exact revision of the *analyticsreporting:v4* schema built by the [mako](http://www.makotemplates.org/) code generator *v2.0.9*.
 //! 
 //! Everything else about the *AnalyticsReporting* *v4* API can be found at the
 //! [official documentation site](https://developers.google.com/analytics/devguides/reporting/core/v4/).
@@ -70,7 +70,6 @@
 //! hyper-rustls = "^0.22"
 //! serde = "^1.0"
 //! serde_json = "^1.0"
-//! yup-oauth2 = "^5.0"
 //! ```
 //! 
 //! ## A complete example
@@ -78,14 +77,12 @@
 //! ```test_harness,no_run
 //! extern crate hyper;
 //! extern crate hyper_rustls;
-//! extern crate yup_oauth2 as oauth2;
 //! extern crate google_analyticsreporting4 as analyticsreporting4;
 //! use analyticsreporting4::api::SearchUserActivityRequest;
 //! use analyticsreporting4::{Result, Error};
 //! # async fn dox() {
 //! use std::default::Default;
-//! use oauth2;
-//! use analyticsreporting4::AnalyticsReporting;
+//! use analyticsreporting4::{AnalyticsReporting, oauth2};
 //! 
 //! // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 //! // `client_secret`, among other things.
@@ -95,9 +92,9 @@
 //! // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 //! // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 //! // retrieve them from storage.
-//! let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+//! let auth = oauth2::InstalledFlowAuthenticator::builder(
 //!         secret,
-//!         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+//!         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 //!     ).build().await.unwrap();
 //! let mut hub = AnalyticsReporting::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 //! // As the method needs a request, you would usually fill it with the desired information
@@ -200,7 +197,8 @@ extern crate serde_derive;
 extern crate hyper;
 extern crate serde;
 extern crate serde_json;
-extern crate yup_oauth2 as oauth2;
+// Re-export the yup_oauth2 crate, that is required to call some methods of the hub and the client
+pub extern crate yup_oauth2 as oauth2;
 extern crate mime;
 extern crate url;
 

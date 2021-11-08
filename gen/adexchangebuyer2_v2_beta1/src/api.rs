@@ -52,14 +52,12 @@ impl Default for Scope {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::AcceptProposalRequest;
 /// use adexchangebuyer2_v2_beta1::{Result, Error};
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// // Get an ApplicationSecret instance by some means. It contains the `client_id` and 
 /// // `client_secret`, among other things.
@@ -69,9 +67,9 @@ impl Default for Scope {
 /// // Provide your own `AuthenticatorDelegate` to adjust the way it operates and get feedback about 
 /// // what's going on. You probably want to bring in your own `TokenStorage` to persist tokens and
 /// // retrieve them from storage.
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -106,8 +104,8 @@ impl Default for Scope {
 /// ```
 #[derive(Clone)]
 pub struct AdExchangeBuyerII<> {
-    client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
-    auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
+    pub client: hyper::Client<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>, hyper::body::Body>,
+    pub auth: oauth2::authenticator::Authenticator<hyper_rustls::HttpsConnector<hyper::client::connect::HttpConnector>>,
     _user_agent: String,
     _base_url: String,
     _root_url: String,
@@ -121,7 +119,7 @@ impl<'a, > AdExchangeBuyerII<> {
         AdExchangeBuyerII {
             client,
             auth: authenticator,
-            _user_agent: "google-api-rust-client/2.0.8".to_string(),
+            _user_agent: "google-api-rust-client/2.0.9".to_string(),
             _base_url: "https://adexchangebuyer.googleapis.com/".to_string(),
             _root_url: "https://adexchangebuyer.googleapis.com/".to_string(),
         }
@@ -135,7 +133,7 @@ impl<'a, > AdExchangeBuyerII<> {
     }
 
     /// Set the user-agent header field to use in all requests to the server.
-    /// It defaults to `google-api-rust-client/2.0.8`.
+    /// It defaults to `google-api-rust-client/2.0.9`.
     ///
     /// Returns the previously set user-agent.
     pub fn user_agent(&mut self, agent_name: String) -> String {
@@ -2603,18 +2601,16 @@ impl client::RequestValue for WatchCreativeRequest {}
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -3343,18 +3339,16 @@ impl<'a> AccountMethods<'a> {
 /// ```test_harness,no_run
 /// extern crate hyper;
 /// extern crate hyper_rustls;
-/// extern crate yup_oauth2 as oauth2;
 /// extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// 
 /// # async fn dox() {
 /// use std::default::Default;
-/// use oauth2;
-/// use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// let secret: oauth2::ApplicationSecret = Default::default();
-/// let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// let auth = oauth2::InstalledFlowAuthenticator::builder(
 ///         secret,
-///         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+///         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 ///     ).build().await.unwrap();
 /// let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // Usually you wouldn't bind this to a variable, but keep calling *CallBuilders*
@@ -3928,18 +3922,16 @@ impl<'a> BidderMethods<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::ClientUserInvitation;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -4224,17 +4216,15 @@ impl<'a> AccountClientInvitationCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4502,17 +4492,15 @@ impl<'a> AccountClientInvitationGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -4792,17 +4780,15 @@ impl<'a> AccountClientInvitationListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5070,17 +5056,15 @@ impl<'a> AccountClientUserGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -5360,18 +5344,16 @@ impl<'a> AccountClientUserListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::ClientUser;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5668,18 +5650,16 @@ impl<'a> AccountClientUserUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::Client;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -5952,17 +5932,15 @@ impl<'a> AccountClientCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6218,17 +6196,15 @@ impl<'a> AccountClientGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -6508,18 +6484,16 @@ impl<'a> AccountClientListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::Client;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -6804,18 +6778,16 @@ impl<'a> AccountClientUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::AddDealAssociationRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7100,17 +7072,15 @@ impl<'a> AccountCreativeDealAssociationAddCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -7402,18 +7372,16 @@ impl<'a> AccountCreativeDealAssociationListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::RemoveDealAssociationRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7698,18 +7666,16 @@ impl<'a> AccountCreativeDealAssociationRemoveCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::Creative;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -7994,17 +7960,15 @@ impl<'a> AccountCreativeCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8260,17 +8224,15 @@ impl<'a> AccountCreativeGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -8550,18 +8512,16 @@ impl<'a> AccountCreativeListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::StopWatchingCreativeRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -8846,18 +8806,16 @@ impl<'a> AccountCreativeStopWatchingCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::Creative;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9142,18 +9100,16 @@ impl<'a> AccountCreativeUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::WatchCreativeRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -9438,17 +9394,15 @@ impl<'a> AccountCreativeWatchCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -9740,17 +9694,15 @@ impl<'a> AccountFinalizedProposalListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10006,17 +9958,15 @@ impl<'a> AccountProductGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -10296,18 +10246,16 @@ impl<'a> AccountProductListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::AcceptProposalRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10592,18 +10540,16 @@ impl<'a> AccountProposalAcceptCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::AddNoteRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -10888,18 +10834,16 @@ impl<'a> AccountProposalAddNoteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::CancelNegotiationRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11184,18 +11128,16 @@ impl<'a> AccountProposalCancelNegotiationCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::CompleteSetupRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11480,18 +11422,16 @@ impl<'a> AccountProposalCompleteSetupCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::Proposal;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -11764,17 +11704,15 @@ impl<'a> AccountProposalCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -12030,17 +11968,15 @@ impl<'a> AccountProposalGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -12332,18 +12268,16 @@ impl<'a> AccountProposalListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::PauseProposalRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12628,18 +12562,16 @@ impl<'a> AccountProposalPauseCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::ResumeProposalRequest;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -12924,18 +12856,16 @@ impl<'a> AccountProposalResumeCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::Proposal;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -13220,17 +13150,15 @@ impl<'a> AccountProposalUpdateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13486,17 +13414,15 @@ impl<'a> AccountPublisherProfileGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -13764,17 +13690,15 @@ impl<'a> AccountPublisherProfileListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14046,17 +13970,15 @@ impl<'a> BidderAccountFilterSetBidMetricListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14328,17 +14250,15 @@ impl<'a> BidderAccountFilterSetBidResponseErrorListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14610,17 +14530,15 @@ impl<'a> BidderAccountFilterSetBidResponsesWithoutBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -14892,17 +14810,15 @@ impl<'a> BidderAccountFilterSetFilteredBidRequestListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15186,17 +15102,15 @@ impl<'a> BidderAccountFilterSetFilteredBidCreativeListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15480,17 +15394,15 @@ impl<'a> BidderAccountFilterSetFilteredBidDetailListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -15762,17 +15674,15 @@ impl<'a> BidderAccountFilterSetFilteredBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16044,17 +15954,15 @@ impl<'a> BidderAccountFilterSetImpressionMetricListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16326,17 +16234,15 @@ impl<'a> BidderAccountFilterSetLosingBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -16608,18 +16514,16 @@ impl<'a> BidderAccountFilterSetNonBillableWinningBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::FilterSet;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -16908,17 +16812,15 @@ impl<'a> BidderAccountFilterSetCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -17166,17 +17068,15 @@ impl<'a> BidderAccountFilterSetDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -17424,17 +17324,15 @@ impl<'a> BidderAccountFilterSetGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -17706,17 +17604,15 @@ impl<'a> BidderAccountFilterSetListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -17988,17 +17884,15 @@ impl<'a> BidderFilterSetBidMetricListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -18270,17 +18164,15 @@ impl<'a> BidderFilterSetBidResponseErrorListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -18552,17 +18444,15 @@ impl<'a> BidderFilterSetBidResponsesWithoutBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -18834,17 +18724,15 @@ impl<'a> BidderFilterSetFilteredBidRequestListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -19128,17 +19016,15 @@ impl<'a> BidderFilterSetFilteredBidCreativeListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -19422,17 +19308,15 @@ impl<'a> BidderFilterSetFilteredBidDetailListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -19704,17 +19588,15 @@ impl<'a> BidderFilterSetFilteredBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -19986,17 +19868,15 @@ impl<'a> BidderFilterSetImpressionMetricListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -20268,17 +20148,15 @@ impl<'a> BidderFilterSetLosingBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -20550,18 +20428,16 @@ impl<'a> BidderFilterSetNonBillableWinningBidListCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// use adexchangebuyer2_v2_beta1::api::FilterSet;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // As the method needs a request, you would usually fill it with the desired information
@@ -20850,17 +20726,15 @@ impl<'a> BidderFilterSetCreateCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -21108,17 +20982,15 @@ impl<'a> BidderFilterSetDeleteCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and
@@ -21366,17 +21238,15 @@ impl<'a> BidderFilterSetGetCall<'a> {
 /// ```test_harness,no_run
 /// # extern crate hyper;
 /// # extern crate hyper_rustls;
-/// # extern crate yup_oauth2 as oauth2;
 /// # extern crate google_adexchangebuyer2_v2_beta1 as adexchangebuyer2_v2_beta1;
 /// # async fn dox() {
 /// # use std::default::Default;
-/// # use oauth2;
-/// # use adexchangebuyer2_v2_beta1::AdExchangeBuyerII;
+/// # use adexchangebuyer2_v2_beta1::{AdExchangeBuyerII, oauth2};
 /// 
 /// # let secret: oauth2::ApplicationSecret = Default::default();
-/// # let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+/// # let auth = oauth2::InstalledFlowAuthenticator::builder(
 /// #         secret,
-/// #         yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+/// #         oauth2::InstalledFlowReturnMethod::HTTPRedirect,
 /// #     ).build().await.unwrap();
 /// # let mut hub = AdExchangeBuyerII::new(hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots()), auth);
 /// // You can configure optional parameters by calling the respective setters at will, and

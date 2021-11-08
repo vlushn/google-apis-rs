@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_documentai1_beta2::{api, Error};
+use google_documentai1_beta2::{api, Error, oauth2};
 
 mod client;
 
@@ -575,9 +574,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/documentai1-beta2", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -778,7 +777,7 @@ async fn main() {
     
     let mut app = App::new("documentai1-beta2")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210329")
+           .version("2.0.9+20210329")
            .about("Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_documentai1_beta2_cli")
            .arg(Arg::with_name("url")

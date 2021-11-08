@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_appengine1::{api, Error};
+use google_appengine1::{api, Error, oauth2};
 
 mod client;
 
@@ -3012,9 +3011,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/appengine1", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -4171,7 +4170,7 @@ async fn main() {
     
     let mut app = App::new("appengine1")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210324")
+           .version("2.0.9+20210324")
            .about("Provisions and manages developers' App Engine applications.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_appengine1_cli")
            .arg(Arg::with_name("url")

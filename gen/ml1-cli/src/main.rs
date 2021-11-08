@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_ml1::{api, Error};
+use google_ml1::{api, Error, oauth2};
 
 mod client;
 
@@ -3764,9 +3763,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/ml1", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -4955,7 +4954,7 @@ async fn main() {
     
     let mut app = App::new("ml1")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210317")
+           .version("2.0.9+20210317")
            .about("An API to enable creating and using machine learning models.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_ml1_cli")
            .arg(Arg::with_name("url")
