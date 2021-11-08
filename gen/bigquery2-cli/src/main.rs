@@ -7,13 +7,12 @@ extern crate tokio;
 
 #[macro_use]
 extern crate clap;
-extern crate yup_oauth2 as oauth2;
 
 use std::env;
 use std::io::{self, Write};
 use clap::{App, SubCommand, Arg};
 
-use google_bigquery2::{api, Error};
+use google_bigquery2::{api, Error, oauth2};
 
 mod client;
 
@@ -950,10 +949,7 @@ impl<'n> Engine<'n> {
                 }
             }
         }
-        let vals = opt.values_of("mode").unwrap().collect::<Vec<&str>>();
-        let protocol = calltype_from_str(vals[0], ["simple"].iter().map(|&v| v.to_string()).collect(), err);
-        let mut input_file = input_file_from_opts(vals[1], err);
-        let mime_type = input_mime_from_opts(opt.value_of("mime").unwrap_or("application/octet-stream"), err);
+        let protocol = CallType::Standard;
         if dry_run {
             Ok(())
         } else {
@@ -966,8 +962,8 @@ impl<'n> Engine<'n> {
                 Err(io_err) => return Err(DoitError::IoError(opt.value_of("out").unwrap_or("-").to_string(), io_err)),
             };
             match match protocol {
-                CallType::Upload(UploadProtocol::Simple) => call.upload(input_file.unwrap(), mime_type.unwrap()).await,
-                CallType::Standard => unreachable!()
+                CallType::Standard => call.doit().await,
+                _ => unreachable!()
             } {
                 Err(api_err) => Err(DoitError::ApiError(api_err)),
                 Ok((mut response, output_schema)) => {
@@ -3439,9 +3435,9 @@ impl<'n> Engine<'n> {
             }
         };
 
-        let auth = yup_oauth2::InstalledFlowAuthenticator::builder(
+        let auth = oauth2::InstalledFlowAuthenticator::builder(
             secret,
-            yup_oauth2::InstalledFlowReturnMethod::HTTPRedirect,
+            oauth2::InstalledFlowReturnMethod::HTTPRedirect,
         ).persist_tokens_to_disk(format!("{}/bigquery2", config_dir)).build().await.unwrap();
 
         let client = hyper::Client::builder().build(hyper_rustls::HttpsConnector::with_native_roots());
@@ -3475,7 +3471,6 @@ impl<'n> Engine<'n> {
 #[tokio::main]
 async fn main() {
     let mut exit_status = 0i32;
-    let upload_value_names = ["mode", "file"];
     let arg_data = [
         ("datasets", "methods: 'delete', 'get', 'insert', 'list', 'patch' and 'update'", vec![
             ("delete",
@@ -3768,12 +3763,6 @@ async fn main() {
                     (Some(r##"kv"##),
                      Some(r##"r"##),
                      Some(r##"Set various fields of the request structure, matching the key=value form"##),
-                     Some(true),
-                     Some(true)),
-        
-                    (Some(r##"mode"##),
-                     Some(r##"u"##),
-                     Some(r##"Specify the upload protocol (simple) and the file to upload"##),
                      Some(true),
                      Some(true)),
         
@@ -4675,7 +4664,7 @@ async fn main() {
     
     let mut app = App::new("bigquery2")
            .author("Sebastian Thiel <byronimo@gmail.com>")
-           .version("2.0.8+20210327")
+           .version("2.0.9+20210327")
            .about("A data platform for customers to create, manage, share and query data.")
            .after_help("All documentation details can be found at http://byron.github.io/google-apis-rs/google_bigquery2_cli")
            .arg(Arg::with_name("url")
@@ -4727,17 +4716,6 @@ async fn main() {
                        }
                        if let &Some(multi) = multi {
                            arg = arg.multiple(multi);
-                       }
-                       if arg_name_str == "mode" {
-                           arg = arg.number_of_values(2);
-                           arg = arg.value_names(&upload_value_names);
-           
-                           scmd = scmd.arg(Arg::with_name("mime")
-                                               .short("m")
-                                               .requires("mode")
-                                               .required(false)
-                                               .help("The file's mime time, like 'application/octet-stream'")
-                                               .takes_value(true));
                        }
                        scmd = scmd.arg(arg);
                    }
